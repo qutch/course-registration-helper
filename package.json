@@ -1,0 +1,14 @@
+{
+  "name": "course-scheduler",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Find class schedules that fit together, using Northeastern's Banner class search.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  }
+}

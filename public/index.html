@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Course Scheduler</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Course Scheduler</h1>
+    <label class="term-picker">
+      <span class="visually-hidden">Term</span>
+      <select id="term"></select>
+    </label>
+    <div class="spacer"></div>
+    <span id="freshness" class="muted"></span>
+    <button id="refresh" class="button quiet" type="button" title="Download the latest class list and seat counts">Update</button>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <section class="panel">
+        <div class="search">
+          <input id="search" type="search" autocomplete="off" spellcheck="false"
+                 placeholder="Add a class, like CS 3000" aria-label="Add a class"
+                 role="combobox" aria-expanded="false" aria-controls="results">
+          <ul id="results" class="results" role="listbox" hidden></ul>
+        </div>
+        <label class="search-filter">
+          <span class="muted small">NUPath</span>
+          <select id="nupath"></select>
+        </label>
+      </section>
+
+      <section class="panel">
+        <h2>Your classes <span id="credits" class="muted"></span></h2>
+        <div id="courses"></div>
+      </section>
+
+      <section id="savedPanel" class="panel" hidden>
+        <h2>Saved plans <span id="savedCount" class="muted"></span></h2>
+        <div id="saved"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Preferences</h2>
+        <div class="prefs">
+          <label class="field">
+            <span>Campus</span>
+            <select id="campus"></select>
+          </label>
+          <div class="field-row">
+            <label class="field">
+              <span>Start no earlier than</span>
+              <select id="earliest"></select>
+            </label>
+            <label class="field">
+              <span>End no later than</span>
+              <select id="latest"></select>
+            </label>
+          </div>
+          <div class="field">
+            <span>Keep these days free</span>
+            <div id="daysOff" class="day-chips"></div>
+          </div>
+          <label class="check"><input id="openOnly" type="checkbox"> Only sections with open seats</label>
+          <label class="check"><input id="includeOnline" type="checkbox"> Include online sections</label>
+          <label class="check"><input id="includeHonors" type="checkbox"> Include honors sections</label>
+        </div>
+      </section>
+    </aside>
+
+    <main class="main">
+      <div id="loading" class="state" hidden>
+        <h2 id="loadingTitle">Getting the class list…</h2>
+        <div class="progress"><div id="progressBar"></div></div>
+        <p id="loadingDetail" class="muted"></p>
+        <button id="retry" class="button" type="button" hidden>Try again</button>
+      </div>
+
+      <div id="workspace" hidden>
+        <div id="empty" class="notice" hidden>
+          <h2>Add your classes to get started</h2>
+          <p>Search for each class you want to take. Every way they fit together shows up here, best first.</p>
+        </div>
+
+        <div id="problem" class="notice warn" hidden>
+          <h2>These classes don’t fit together yet</h2>
+          <ul id="problemList"></ul>
+          <button id="clearBusy" class="button" type="button" hidden>Clear my busy time</button>
+        </div>
+
+        <div id="toolbar" class="toolbar" hidden>
+          <div class="pager">
+            <button id="prev" class="button icon" type="button" aria-label="Previous schedule">‹</button>
+            <span id="position"></span>
+            <button id="next" class="button icon" type="button" aria-label="Next schedule">›</button>
+          </div>
+          <label class="sort">
+            <span class="muted">Show first</span>
+            <select id="sort"></select>
+          </label>
+          <div class="spacer"></div>
+          <button id="savePlan" class="button" type="button">Save plan</button>
+          <form id="saveForm" class="save-form" hidden>
+            <input id="planName" type="text" maxlength="40" autocomplete="off" aria-label="Plan name">
+            <button class="button primary" type="submit">Save</button>
+            <button id="cancelSave" class="button quiet" type="button">Cancel</button>
+          </form>
+          <button id="copy" class="button primary" type="button">Copy CRNs</button>
+        </div>
+        <p id="summary" class="summary" hidden></p>
+        <div id="calendar" class="calendar"></div>
+        <p class="hint muted">Drag on the calendar to block off time you’re busy. Click a class to lock that section in.</p>
+        <div id="details" class="details"></div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
